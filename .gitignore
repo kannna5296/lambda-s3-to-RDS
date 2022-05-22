@@ -1,3 +1,7 @@
+rds_config.py
+s3_config.py
+app.zip
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
