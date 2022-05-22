@@ -69,6 +69,7 @@ def handler(event, context):
     item_count = 0
 
     dt_now = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    logger.info("SQL Start: "+dt_now)
     with conn.cursor() as cur:
         #TODO taskテーブルとの整合性は後(task_idは仮)
         #TODO TaskCsvModel.nameを元にはユーザの存在確認(user_idは仮)
@@ -87,7 +88,8 @@ def handler(event, context):
             sql = 'insert into task_detail (task_id, user_id, content, created_at) values (1,' + str(result[0]) + ', "' + taskData.content + '","'+ dt_now + '")'
             cur.execute(sql)
             conn.commit()
-
+    dt_now = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
+    logger.info("SQL End: "+dt_now)
     return "Added %d items from RDS MySQL table" %(item_count)
 
 #csvデータクラス
