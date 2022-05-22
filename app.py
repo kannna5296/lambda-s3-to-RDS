@@ -75,10 +75,18 @@ def handler(event, context):
         #TODO BULK_INSERT
         #TODO トランザクション周り
         for taskData in taskDatas:
-            sql = 'insert into task_detail (task_id, user_id, content, created_at) values (1, 1, "' + taskData.content + '","'+ dt_now + '")'
+
+            #ユーザ存在チェック
+            sql = 'select * from user where name = "' + taskData.name + '"'
             cur.execute(sql)
-        conn.commit()
-    conn.commit()
+            result = cur.fetchone()
+            if(result is None):
+                logger.error("そんなユーザおらんで " + taskData.name)
+                #登録できなかったものをエラーログとして出したい
+                continue
+            sql = 'insert into task_detail (task_id, user_id, content, created_at) values (1,' + str(result[0]) + ', "' + taskData.content + '","'+ dt_now + '")'
+            cur.execute(sql)
+            conn.commit()
 
     return "Added %d items from RDS MySQL table" %(item_count)
 
