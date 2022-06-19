@@ -31,12 +31,13 @@ src_file_encoding=s3_config.src_file_encoding
 #Lambda Handler
 def handler(event, context):
     #bucket名取得
-    bucket = event['Records'][0]['s3']['bucket']['name'];
+    bucketName = event['Records'][0]['s3']['bucket']['name'];
     #key名(ファイル名)取得
-    key = event['Records'][0]['s3']['object']['key'];
+    keyName = event['Records'][0]['s3']['object']['key'];
     
-    obj = bucket.Object(key)
-    response = obj.get()    
+    bucket = s3.Bucket(bucketName)
+    object = bucket.Object(keyName)
+    response = object.get()    
     body = response['Body'].read().decode(src_file_encoding)
 
     st = io.StringIO()
