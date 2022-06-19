@@ -15,6 +15,7 @@ name = rds_config.db_username
 password = rds_config.db_password
 db_name = rds_config.db_name
 
+#TODO MSSQLで接続できるようにする
 #rds connection get(from https://docs.aws.amazon.com/ja_jp/lambda/latest/dg/services-rds-tutorial.html)
 # try:
 #     conn = pymysql.connect(host=rds_host, user=name, passwd=password, db=db_name, connect_timeout=5)
@@ -64,6 +65,9 @@ def handler(event, context):
     """
     This function fetches content from MySQL RDS instance
     """
+
+    #TODO csvファイル名から、親レコードを特定
+    
     # item_count = 0
 
     # dt_now = datetime.datetime.now().strftime('%Y/%m/%d %H:%M:%S')
